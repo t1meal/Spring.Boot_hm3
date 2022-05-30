@@ -47,4 +47,18 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    //GET http://localhost:8080/app/products/inc
+    @GetMapping("/products/inc_{id}")
+    public String incCost(@PathVariable Long id){
+        productService.getProductById(id).incCost();
+        return "redirect:/products";
+    }
+
+    //GET http://localhost:8080/app/products/inc
+    @GetMapping("/products/dec_{id}")
+    public String decCost(@PathVariable Long id){
+        productService.getProductById(id).decCost();
+        return "redirect:/products";
+    }
+
 }
