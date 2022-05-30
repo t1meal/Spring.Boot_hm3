@@ -19,7 +19,7 @@
             <td>Title</td>
             <td>Cost</td>
             <td>Controls</td>
-
+            <td>Inc/Dec Cost</td>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +29,10 @@
             <td th:text="${s.cost}"></td>
             <td>
                 <a th:href="@{'/products/' + ${s.id}}" type="button" class="btn btn-success">More</a>
+            </td>
+            <td>
+                <a th:href="@{'/products/inc_' + ${s.id}}" type="button" class="btn btn-success">+</a>
+                <a th:href="@{'/products/dec_' + ${s.id}}" type="button" class="btn btn-success">-</a>
             </td>
         </tr>
         </tbody>

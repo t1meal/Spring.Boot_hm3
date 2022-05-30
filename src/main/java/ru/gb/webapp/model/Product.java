@@ -25,9 +25,9 @@ public class Product {
     }
 
     public void incCost(){
-       this.cost++;
+       cost++;
     }
     public void decCost(){
-        this.cost--;
+        cost--;
     }
 }
