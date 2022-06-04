@@ -3,26 +3,37 @@ package ru.gb.webapp.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.gb.webapp.model.Product;
-import ru.gb.webapp.repositories.ProductRepository;
+import ru.gb.webapp.repositories.ProductDao;
 
 import java.util.List;
 @Service
 public class ProductService {
-    private ProductRepository productRepository;
+    private ProductDao productDao;
 
     @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
     public List<Product> getAllProducts (){
-        return productRepository.getAllProducts();
+        return productDao.findAll();
     }
     public Product getProductById (long id){
-        return productRepository.getProductById(id);
+        return productDao.findById(id);
     }
 
     public void addProduct (Product product){
-        productRepository.addProduct(product);
+        productDao.save(product);
+    }
+
+    public void productCostInc(Long id){
+        productDao.costInc(id);
+    }
+    public void productCostDec(Long id){
+        productDao.costDec(id);
+    }
+
+    public void deleteProduct (Long id){
+        productDao.deleteById(id);
     }
 }

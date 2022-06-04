@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
     // GET http://localhost:8080/app
     @GetMapping
-    public String showIndexPage(){
+    public String showIndexPage() {
         return "index";
     }
 }
+
+
