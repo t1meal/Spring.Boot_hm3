@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.gb.webapp.model.Product;
 import ru.gb.webapp.services.ProductService;
 
-import java.util.List;
-
 @Controller
 
 public class ProductController {
@@ -48,16 +46,23 @@ public class ProductController {
     }
 
     //GET http://localhost:8080/app/products/inc
-    @GetMapping("/products/inc_{id}")
+    @GetMapping("/products/inc/{id}")
     public String incCost(@PathVariable Long id){
-        productService.getProductById(id).incCost();
+        productService.productCostInc(id);
         return "redirect:/products";
     }
 
     //GET http://localhost:8080/app/products/inc
-    @GetMapping("/products/dec_{id}")
+    @GetMapping("/products/dec/{id}")
     public String decCost(@PathVariable Long id){
-        productService.getProductById(id).decCost();
+        productService.productCostDec(id);
+        return "redirect:/products";
+    }
+
+    //GET http://localhost:8080/app/products/inc
+    @GetMapping("/products/delete/{id}")
+    public String delete (@PathVariable Long id){
+        productService.deleteProduct(id);
         return "redirect:/products";
     }
 

@@ -20,6 +20,7 @@
             <td>Cost</td>
             <td>Controls</td>
             <td>Inc/Dec Cost</td>
+            <td>.......</td>
         </tr>
         </thead>
         <tbody>
@@ -31,8 +32,11 @@
                 <a th:href="@{'/products/' + ${s.id}}" type="button" class="btn btn-success">More</a>
             </td>
             <td>
-                <a th:href="@{'/products/inc_' + ${s.id}}" type="button" class="btn btn-success">+</a>
-                <a th:href="@{'/products/dec_' + ${s.id}}" type="button" class="btn btn-success">-</a>
+                <a th:href="@{'/products/inc/' + ${s.id}}" type="button" class="btn btn-success">+</a>
+                <a th:href="@{'/products/dec/' + ${s.id}}" type="button" class="btn btn-success">-</a>
+            </td>
+            <td>
+                <a th:href="@{'/products/delete/' + ${s.id}}" type="button" class="btn btn-success">Delete</a>
             </td>
         </tr>
         </tbody>
