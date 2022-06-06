@@ -1,4 +1,4 @@
-package ru.gb.webapp.dao;
+package ru.gb.webapp.services.db;
 
 
 import org.hibernate.SessionFactory;
@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FactoryOfSession {
+public class SessionService {
     private SessionFactory factory;
 
     @Autowired
-    public FactoryOfSession() {
+    public SessionService() {
         factory = new Configuration().
-                configure("configs/dao/hibernate.cfg.xml")
+                configure("configs/main/hibernate.cfg.xml")
                 .buildSessionFactory();
     }
 

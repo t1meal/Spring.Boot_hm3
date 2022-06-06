@@ -1,6 +1,7 @@
 package ru.gb.webapp.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -15,6 +16,22 @@ public class Product {
 
     @Column(name = "cost")
     private int cost;
+
+    @ManyToMany
+    @JoinTable(
+            name = "buyers_products",
+            joinColumns = @JoinColumn (name = "product_id"),
+            inverseJoinColumns = @JoinColumn (name = "buyer_id")
+    )
+
+    private List<Buyer> buyers;
+
+    public List<Buyer> getBuyers() {
+        return buyers;
+    }
+    public void setBuyers(List<Buyer> buyers) {
+        this.buyers = buyers;
+    }
 
     public Product() {
     }
