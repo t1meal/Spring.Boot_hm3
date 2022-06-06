@@ -1,8 +1,9 @@
-package ru.gb.webapp.dao;
+package ru.gb.webapp.services.db;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -15,9 +16,10 @@ public class PrepareDataDB {
 
     public PrepareDataDB() {
     }
+    @Autowired
     public void refresh (){
         SessionFactory factory = new Configuration()
-                .configure("configs/dao/hibernate.cfg.xml")
+                .configure("configs/hibernate.cfg.xml")
                 .buildSessionFactory();
         Session session = null;
         try {

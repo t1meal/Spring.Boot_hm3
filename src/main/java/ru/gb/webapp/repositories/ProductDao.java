@@ -3,38 +3,31 @@ package ru.gb.webapp.repositories;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.gb.webapp.dao.FactoryOfSession;
-import ru.gb.webapp.dao.PrepareDataDB;
+import ru.gb.webapp.model.Buyer;
+import ru.gb.webapp.services.db.SessionService;
 import ru.gb.webapp.model.Product;
 
 import java.util.List;
 
 @Service
-public class ProductDao {
-    private FactoryOfSession factoryOfSession;
-    private PrepareDataDB prepareDataDB;
+public class ProductDao implements MainDao<Product> {
+    private SessionService factory;
 
     @Autowired
-    private void setPrimary(FactoryOfSession factoryOfSession, PrepareDataDB prepareDataDB) {
-        this.factoryOfSession = factoryOfSession;
-        this.prepareDataDB = prepareDataDB;
+    private void setFactory(SessionService factory) {
+        this.factory = factory;
     }
-
-    @Autowired
-    private void refreshBD (){
-        prepareDataDB.refresh();
-    }
-
-    public void save (Product product) {
-        try (Session session = factoryOfSession.getFactory().getCurrentSession()) {
+    @Override
+    public void save(Product product) {
+        try (Session session = factory.getFactory().getCurrentSession()) {
             session.beginTransaction();
             session.save(product);
             session.getTransaction().commit();
         }
     }
-
-    public void deleteById (Long id) {
-        try (Session session = factoryOfSession.getFactory().getCurrentSession()) {
+    @Override
+    public void deleteById(Long id) {
+        try (Session session = factory.getFactory().getCurrentSession()) {
             session.beginTransaction();
             Product product = session.get(Product.class, id);
             session.delete(product);
@@ -42,18 +35,21 @@ public class ProductDao {
         }
     }
 
+    @Override
     public Product findById(Long id) {
         Product product;
-        try (Session session = factoryOfSession.getFactory().getCurrentSession()) {
+        try (Session session = factory.getFactory().getCurrentSession()) {
             session.beginTransaction();
             product = session.get(Product.class, id);
             session.getTransaction().commit();
         }
         return product;
     }
-    public List<Product> findAll (){
+
+    @Override
+    public List<Product> findAll() {
         List<Product> productList;
-        try (Session session = factoryOfSession.getFactory().getCurrentSession()) {
+        try (Session session = factory.getFactory().getCurrentSession()) {
             session.beginTransaction();
             productList = session.createQuery("from Product").getResultList();
             session.getTransaction().commit();
@@ -61,20 +57,32 @@ public class ProductDao {
         return productList;
     }
 
-    public void costInc (Long id){
-        try (Session session = factoryOfSession.getFactory().getCurrentSession()){
+    public void costInc(Long id) {
+        try (Session session = factory.getFactory().getCurrentSession()) {
             session.beginTransaction();
             Product product = session.get(Product.class, id);
             product.incCost();
             session.getTransaction().commit();
         }
     }
-    public void costDec (Long id){
-        try (Session session = factoryOfSession.getFactory().getCurrentSession()){
+    public void costDec(Long id) {
+        try (Session session = factory.getFactory().getCurrentSession()) {
             session.beginTransaction();
             Product product = session.get(Product.class, id);
             product.decCost();
             session.getTransaction().commit();
         }
+    }
+    public List<Buyer> getProductBuyers(Long id) {
+        List<Buyer> productBuyers;
+        try (Session session = factory.getFactory().getCurrentSession()) {
+            session.beginTransaction();
+            Product product = session.get(Product.class, id);
+            System.out.println(product);
+            System.out.println(product.getBuyers());
+            productBuyers = product.getBuyers();
+            session.getTransaction().commit();
+        }
+        return productBuyers;
     }
 }
